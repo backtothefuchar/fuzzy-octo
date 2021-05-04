@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title> View User Posts</title>
+</head>
+
+<body>
+    <form name="viewUserPosts" action="viewUserPosts.php" method="post">
+        <label for="user">Choose a user: </label>
+        <select name="user">
+            <?php
+            error_reporting(E_ALL);
+            ini_set("display_errors", 1);
+            
+            $mysqli = new mysqli("mysql.eecs.ku.edu", "charansuresh", "Pe9hae4i", "charansuresh");
+            
+            if($mysqli->connect_errno){
+                printf("Connect failed: %s\n", $mysql->connect_errno);
+                exit();
+            }	
+            
+
+            $users = mysqli_query($con, "SELECT user_id FROM USER");
+
+            while($user = mysqli_fetch_array($users))
+            {
+                $user_id = $user[user_id];
+                echo "<option value='$user_id'>$user_id</option>";
+            }
+
+            $mysqli->close();
+
+            ?>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>
