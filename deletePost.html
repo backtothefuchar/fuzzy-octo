@@ -1,7 +1,11 @@
 <html>
+
 <head>
+    <title>Delete Post</title>
+</head>
+
 <body>
-    <form name="deletePost" action="deletePost.php" method="post">
+    <form action="deletePost.php" method="post">
         <table>
             <tr>
                 <th>content</th>
@@ -9,29 +13,31 @@
                 <th>checkbox</th>
             </tr>
             <?php
-                ini_set('display_errors', 1);
-                ini_set('display_startup_errors', 1);
-                error_reporting(E_ALL);
-                $con = mysqli_connect("mysql.eecs.ku.edu", "kaiwidman", "xeeves9e",
-                "kaiwidman");
-                if (!$con){
-                    die("ERROR: Could not connect. ".mysqli_connect_error());
-                }
+            error_reporting(E_ALL);
+            ini_set("display_errors", 1);
 
-                $posts = mysqli_query($con, "SELECT author_id, content, post_id FROM POSTS");
+            $mysqli = new mysqli("mysql.eecs.ku.edu", "charansuresh", "Pe9hae4i", "charansuresh");
 
-                while($post = mysqli_fetch_array($posts))
-                {
-                    echo "<tr>";
-                        echo "<td>$post[content]</td>";
-                        echo "<td>$post[author_id]</td>";
-                        echo "<td><input type='checkbox' name='post[]' value=\"$post[post_id]\"></td>";
-                    echo "</tr>";
-                }
-            ?>
+            if($mysqli->connect_errno){
+                printf("Connect failed: %s\n", $mysql->connect_errno);
+                exit();
+            }	
+
+			$users = "SELECT * FROM Posts";
+			if ($result = $mysqli->query($users)) {
+				while ($row = $result->fetch_assoc()) {
+					echo "<tr><td>" . $row["content"] . "</td>";
+					echo "<td>" . $row["author_id"] . "</td>";
+					echo '<td><input type="checkbox" name="posts[]" value="' . $row['post_id'] . '"></td>';
+				}
+			}
+
+			$mysqli->close();
+
+			?>
         </table>
         <input type="submit" value="Submit">
     </form>
 </body>
-</head>
+
 </html>

@@ -11,26 +11,24 @@
             <?php
             error_reporting(E_ALL);
             ini_set("display_errors", 1);
-            
+
             $mysqli = new mysqli("mysql.eecs.ku.edu", "charansuresh", "Pe9hae4i", "charansuresh");
-            
+
             if($mysqli->connect_errno){
                 printf("Connect failed: %s\n", $mysql->connect_errno);
                 exit();
             }	
-            
 
-            $users = mysqli_query($con, "SELECT user_id FROM USER");
+			$users = "SELECT user_id FROM Users";
+			if ($result = $mysqli->query($users)) {
+				while ($row = $result->fetch_assoc()) {
+					echo "<option value='" . $row["user_id"] . "'></option>";
+				}
+			}
 
-            while($user = mysqli_fetch_array($users))
-            {
-                $user_id = $user[user_id];
-                echo "<option value='$user_id'>$user_id</option>";
-            }
+			$mysqli->close();
 
-            $mysqli->close();
-
-            ?>
+			?>
         </select>
         <input type="submit" value="Submit">
     </form>
