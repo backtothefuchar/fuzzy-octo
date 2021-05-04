@@ -13,7 +13,7 @@ if($mysqli->connect_errno){
 echo "<table border=1px padding=5px>";
 echo "<tr><th>Users</th></tr>";
 
-$users = "SELECT user_id FROM Posts";
+$users = "SELECT user_id FROM Users";
 if ($result = $mysqli->query($users)) {
 	while ($row = $result->fetch_assoc()) {
 		echo "<tr><td>" . $row["user_id"] . "</td><tr>";
